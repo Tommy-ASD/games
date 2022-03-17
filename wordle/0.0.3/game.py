@@ -1,3 +1,6 @@
+# needs fixing:
+# all letters in a guessed word light up yellow even if it's only 1 of the correct letters in the correct word
+
 import random
 from words.wordleWords import fiveLetterWords
 from termcolor import colored
