@@ -1,3 +1,5 @@
+# pong
+
 import random
 
 gameState = []
@@ -6,9 +8,6 @@ gameState = []
 def display():
     for i in range(len(gameState)):
         print(gameState[i])
-
-
-# def bird():
 
 
 def main():

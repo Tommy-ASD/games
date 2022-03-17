@@ -1,3 +1,6 @@
+#flappy bird
+#WIP
+
 import random
 
 gameState = []
@@ -13,7 +16,7 @@ def display():
 def pipes():
     yPos = random(len(gameState[0]))
     for i in range(len(gameState)):
-        
+        pass
 
 def main():
     # playerInputxLength = int(input("How long do you want the console display to be?"))
