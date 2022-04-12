@@ -1,22 +1,25 @@
 from wordleWords import fiveLetterWords
 
 
-def main():
+def checkWords():
     for i in range(len(fiveLetterWords)):
         if (
-            "u" in fiveLetterWords[i]
-            and "g" in fiveLetterWords[i]
-            and "e" in fiveLetterWords[i][4]
-            and "g" not in fiveLetterWords[i][4]
-            and "u" not in fiveLetterWords[i][2]
-            and "g" not in fiveLetterWords[i][2]
-            and "u" not in fiveLetterWords[i][3]
-            and "l" not in fiveLetterWords[i]
-            and "f" not in fiveLetterWords[i]
-            and "v" not in fiveLetterWords[i]
-            and "a" not in fiveLetterWords[i]
+            "s" in fiveLetterWords[i][0]
+            and "e" in fiveLetterWords[i][2]
+            and "l" in fiveLetterWords[i][4]
         ):
             print(fiveLetterWords[i])
+
+
+def inputWord():
+    inputedWord = input("Input word here\n")
+    inputedOutputs = input("Input results here\n")
+    pass
+
+
+def main():
+
+    checkWords()
 
 
 main()
