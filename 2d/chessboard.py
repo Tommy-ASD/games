@@ -1,9 +1,8 @@
 import random
 
-length = 10
-height = 7
+length = 8
+height = 8
 spaces = height * length
-objectAmount = spaces / 3
 field = []
 fieldData = {"state": "a"}
 
@@ -15,24 +14,24 @@ def createField():
         print(field[i])
 
 
-def generateObjects():
-    global objectAmount
-    while objectAmount >= 0:
-        index = random.randrange(0, spaces)
-        field[index]["state"] = "b"
-        objectAmount -= 1
-
-
 def viewField():
     j = 0
-    msg = ""
+    msg = " "
+    for i in range(length):
+        msg += str(i + 1)
+        msg += " "
+    msg += "\n"
     for i in range(spaces):
+        loop = 0
         j += 1
-        print(i)
-        msg += field[i]["state"]
         if j >= length:
             msg += "\n"
+            loop += 1
+            msg += str(loop)
             j = 0
+        print(i)
+        msg += " "
+        msg += field[i]["state"]
     print(msg)
 
 
@@ -44,5 +43,4 @@ def checkAbove(index):
 
 
 createField()
-generateObjects()
 viewField()
