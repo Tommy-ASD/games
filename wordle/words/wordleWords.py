@@ -47,6 +47,7 @@ fiveLetterWords = [
 "aisle",
 "alarm",
 "album",
+"alden",
 "alert",
 "algae",
 "alibi",
