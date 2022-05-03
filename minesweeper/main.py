@@ -84,7 +84,7 @@ def check(index):
         aboveA = True
     if index + 10 < spaces:
         belowA = True
-    if index % length == 0:
+    if index - 1 % length == 0:
         rightA = True
     if index % length == 9:
         leftA = True
