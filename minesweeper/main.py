@@ -74,26 +74,28 @@ def viewField():
 
 
 def checkAbove(index):
-    global field, spaces
+    global field
     above = index - length
     below = index + length
     left = index - 1
     right = index + 1
-    aboveLeft = (index - length) - 1
-    aboveRight = (index - length) + 1
-    belowLeft = (index + length) - 1
-    belowRight = (index + length) + 1
+    aboveLeft = above - 1
+    aboveRight = above + 1
+    belowLeft = below - 1
+    belowRight = below + 1
     if field[index]["state"] == "b":
         return
-    # TODO: optimize
-    field[index]["state"] += field[above]["bomb"]
-    field[index]["state"] += field[below]["bomb"]
-    field[index]["state"] += field[left]["bomb"]
-    field[index]["state"] += field[right]["bomb"]
-    field[index]["state"] += field[aboveRight]["bomb"]
-    field[index]["state"] += field[aboveLeft]["bomb"]
-    field[index]["state"] += field[belowRight]["bomb"]
-    field[index]["state"] += field[belowLeft]["bomb"]
+    neighbors = (
+        field[above]["bomb"]
+        + field[below]["bomb"]
+        + field[left]["bomb"]
+        + field[right]["bomb"]
+        + field[aboveRight]["bomb"]
+        + field[aboveLeft]["bomb"]
+        + field[belowRight]["bomb"]
+        + field[belowLeft]["bomb"]
+    )
+    field[index]["state"] += neighbors
 
     print(field[index]["state"])
 
