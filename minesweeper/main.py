@@ -85,23 +85,16 @@ def checkAbove(index):
     belowRight = (index + length) + 1
     if field[index]["state"] == "b":
         return
-    # TODO: un-yandere dev
-    if field[above]["bomb"]:
-        field[index]["state"] += 1
-    if field[below]["bomb"]:
-        field[index]["state"] += 1
-    if field[left]["bomb"]:
-        field[index]["state"] += 1
-    if field[right]["bomb"]:
-        field[index]["state"] += 1
-    if field[aboveLeft]["bomb"]:
-        field[index]["state"] += 1
-    if field[aboveRight]["bomb"]:
-        field[index]["state"] += 1
-    if field[belowLeft]["bomb"]:
-        field[index]["state"] += 1
-    if field[belowRight]["bomb"]:
-        field[index]["state"] += 1
+    # TODO: optimize
+    field[index]["state"] += field[above]["bomb"]
+    field[index]["state"] += field[below]["bomb"]
+    field[index]["state"] += field[left]["bomb"]
+    field[index]["state"] += field[right]["bomb"]
+    field[index]["state"] += field[aboveRight]["bomb"]
+    field[index]["state"] += field[aboveLeft]["bomb"]
+    field[index]["state"] += field[belowRight]["bomb"]
+    field[index]["state"] += field[belowLeft]["bomb"]
+
     print(field[index]["state"])
 
 
