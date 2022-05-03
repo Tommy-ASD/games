@@ -23,6 +23,7 @@ fieldState = {
     "x": 0,
     "y": 0,
     "neighbors": 0,
+    "state": "a",
 }
 
 
@@ -41,14 +42,11 @@ def generateField():
     bombs = spaces / 3
 
     # adds a fieldstate dictionary to all spaces
-    for i in length:
-        xField.append([])
-    for i in spaces:
-        field.append(fieldState)
+    for i in range(spaces):
+        field.append(fieldState.copy())
         x = length - (i % length)
         field[i]["x"] = x
         field[i]["y"] = height - (i % height)
-        xField[x].append(fieldState)
     while bombs > 0:
         rand = random.randrange(0, spaces)
         if not field[rand]["bomb"]:
@@ -60,6 +58,31 @@ def generateField():
         selfY = i["y"]
         # checkX = length - (selfX % length)
         # check
+    print(field)
+    j = 0
+    msg = ""
+    for i in range(spaces):
+        j += 1
+        print(i)
+        msg += field[i]["state"]
+        msg += " "
+        if j >= length:
+            msg += "\n"
+            j = 0
+    print(msg)
+
+
+def checkAbove(index):
+    global field, spaces
+    above = index - length
+    below = index + length
+    if field[above]["bomb"]:
+        field[index]["neighbors"] += 1
+    if field[below]["bomb"]:
+        field[index]["neighbors"] += 1
+
+    print(field[index]["neighbors"])
+    pass
 
 
 def main():
@@ -68,3 +91,5 @@ def main():
 
 
 main()
+generateField()
+checkAbove(19)

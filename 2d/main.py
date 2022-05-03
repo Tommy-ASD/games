@@ -5,14 +5,13 @@ height = 7
 spaces = height * length
 objectAmount = spaces / 3
 field = []
-fieldData = {"state": "a"}
+fieldData = {"state": "a", "neighbors": 0}
 
 
 def createField():
     for i in range(spaces):
         copy = fieldData.copy()
         field.append(copy)
-        print(field[i])
 
 
 def generateObjects():
@@ -24,24 +23,25 @@ def generateObjects():
 
 
 def viewField():
-    j = 0
+    currentX = 0
     msg = ""
     for i in range(spaces):
-        j += 1
-        print(i)
+        currentX += 1
         msg += field[i]["state"]
-        if j >= length:
+        msg += " "
+        # if current x is length, jump to next y
+        if currentX % length == 0:
             msg += "\n"
-            j = 0
+            currentX = 0
     print(msg)
 
 
 def checkAbove(index):
-    global field
-    space = field[index]
-    x = index % length
-    y = x % height
-    print(x, y)
+    global field, spaces
+    above = index - length
+    if field[above]["state"] == "b":
+        field[index]["neighbors"] += 1
+    print(field[index]["neighbors"])
     pass
 
 
