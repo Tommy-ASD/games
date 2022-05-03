@@ -39,10 +39,13 @@ def viewField():
 def checkAbove(index):
     global field
     space = field[index]
-
+    x = index % length
+    y = x % height
+    print(x, y)
     pass
 
 
 createField()
 generateObjects()
 viewField()
+checkAbove(19)

@@ -3,7 +3,6 @@
 
 import random
 from words.wordleWords import fiveLetterWords
-from termcolor import colored
 import time
 from os import system
 
