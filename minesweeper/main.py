@@ -1,4 +1,3 @@
-from dataclasses import fields
 import random
 
 field = []
@@ -64,7 +63,6 @@ def viewField():
     msg = ""
     for i in range(spaces):
         j += 1
-        print(i)
         msg += str(field[i]["state"])
         msg += " "
         if j >= length:
@@ -74,7 +72,9 @@ def viewField():
 
 
 def checkAbove(index):
-    global field
+    global field, spaces
+    if field[index]["state"] == "b":
+        return
     above = index - length
     below = index + length
     left = index - 1
@@ -83,21 +83,22 @@ def checkAbove(index):
     aboveRight = above + 1
     belowLeft = below - 1
     belowRight = below + 1
-    if field[index]["state"] == "b":
-        return
-    neighbors = (
-        field[above]["bomb"]
-        + field[below]["bomb"]
-        + field[left]["bomb"]
-        + field[right]["bomb"]
-        + field[aboveRight]["bomb"]
-        + field[aboveLeft]["bomb"]
-        + field[belowRight]["bomb"]
-        + field[belowLeft]["bomb"]
-    )
-    field[index]["state"] += neighbors
-
-    print(field[index]["state"])
+    field[index]["state"] += field[above]["bomb"]
+    field[index]["state"] += field[below]["bomb"]
+    field[index]["state"] += field[left]["bomb"]
+    field[index]["state"] += field[right]["bomb"]
+    field[index]["state"] += field[aboveRight]["bomb"]
+    field[index]["state"] += field[aboveLeft]["bomb"]
+    field[index]["state"] += field[belowRight]["bomb"]
+    field[index]["state"] += field[belowLeft]["bomb"]
+    print(f"Above: {field[above]['bomb']}")
+    print(f"Below: {field[below]['bomb']}")
+    print(f"Left: {field[left]['bomb']}")
+    print(f"Right: {field[right]['bomb']}")
+    print(f"Top-right: {field[aboveRight]['bomb']}")
+    print(f"Top-left: {field[aboveLeft]['bomb']}")
+    print(f"Bottom-right: {field[belowRight]['bomb']}")
+    print(f"Bottom-left: {field[belowLeft]['bomb']}")
 
 
 def main():
