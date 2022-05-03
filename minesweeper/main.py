@@ -16,14 +16,18 @@ spaces = length * height
 
 
 # stores information abouta space
+# fieldState = {
+#     "played": False,
+#     "bomb": False,
+#     "flagged": False,
+#     "neighbors": 0,
+#     "state": "a",
+# }
 fieldState = {
-    "played": False,
     "bomb": False,
     "flagged": False,
-    "x": 0,
-    "y": 0,
-    "neighbors": 0,
-    "state": "a",
+    # state can be neighbor amount or bomb (9)
+    "state": 0,
 }
 
 
@@ -51,20 +55,17 @@ def generateField():
         rand = random.randrange(0, spaces)
         if not field[rand]["bomb"]:
             field[rand]["bomb"] = True
+            field[rand]["state"] = "b"
             bombs -= 1
-    for i in field:
-        # how to find spaces with specific X/Y positions?
-        selfX = i["x"]
-        selfY = i["y"]
-        # checkX = length - (selfX % length)
-        # check
-    print(field)
+
+
+def viewField():
     j = 0
     msg = ""
     for i in range(spaces):
         j += 1
         print(i)
-        msg += field[i]["state"]
+        msg += str(field[i]["state"])
         msg += " "
         if j >= length:
             msg += "\n"
@@ -76,13 +77,32 @@ def checkAbove(index):
     global field, spaces
     above = index - length
     below = index + length
+    left = index - 1
+    right = index + 1
+    aboveLeft = (index - length) - 1
+    aboveRight = (index - length) + 1
+    belowLeft = (index + length) - 1
+    belowRight = (index + length) + 1
+    if field[index]["state"] == "b":
+        return
+    # TODO: un-yandere dev
     if field[above]["bomb"]:
-        field[index]["neighbors"] += 1
+        field[index]["state"] += 1
     if field[below]["bomb"]:
-        field[index]["neighbors"] += 1
-
-    print(field[index]["neighbors"])
-    pass
+        field[index]["state"] += 1
+    if field[left]["bomb"]:
+        field[index]["state"] += 1
+    if field[right]["bomb"]:
+        field[index]["state"] += 1
+    if field[aboveLeft]["bomb"]:
+        field[index]["state"] += 1
+    if field[aboveRight]["bomb"]:
+        field[index]["state"] += 1
+    if field[belowLeft]["bomb"]:
+        field[index]["state"] += 1
+    if field[belowRight]["bomb"]:
+        field[index]["state"] += 1
+    print(field[index]["state"])
 
 
 def main():
@@ -92,4 +112,5 @@ def main():
 
 main()
 generateField()
-checkAbove(19)
+checkAbove(15)
+viewField()
