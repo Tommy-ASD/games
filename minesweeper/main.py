@@ -71,10 +71,23 @@ def viewField():
     print(msg)
 
 
-def checkAbove(index):
+def check(index):
     global field, spaces
     if field[index]["state"] == "b":
         return
+    # Direction available
+    leftA = False
+    rightA = False
+    aboveA = False
+    belowA = False
+    if index - 10 > 0:
+        aboveA = True
+    if index + 10 < spaces:
+        belowA = True
+    if index % length == 0:
+        rightA = True
+    if index % length == 9:
+        leftA = True
     above = index - length
     below = index + length
     left = index - 1
@@ -83,22 +96,14 @@ def checkAbove(index):
     aboveRight = above + 1
     belowLeft = below - 1
     belowRight = below + 1
-    field[index]["state"] += field[above]["bomb"]
-    field[index]["state"] += field[below]["bomb"]
-    field[index]["state"] += field[left]["bomb"]
-    field[index]["state"] += field[right]["bomb"]
-    field[index]["state"] += field[aboveRight]["bomb"]
-    field[index]["state"] += field[aboveLeft]["bomb"]
-    field[index]["state"] += field[belowRight]["bomb"]
-    field[index]["state"] += field[belowLeft]["bomb"]
-    print(f"Above: {field[above]['bomb']}")
-    print(f"Below: {field[below]['bomb']}")
-    print(f"Left: {field[left]['bomb']}")
-    print(f"Right: {field[right]['bomb']}")
-    print(f"Top-right: {field[aboveRight]['bomb']}")
-    print(f"Top-left: {field[aboveLeft]['bomb']}")
-    print(f"Bottom-right: {field[belowRight]['bomb']}")
-    print(f"Bottom-left: {field[belowLeft]['bomb']}")
+    field[index]["state"] += field[above]["bomb"] if aboveA else 0
+    field[index]["state"] += field[below]["bomb"] if belowA else 0
+    field[index]["state"] += field[left]["bomb"] if leftA else 0
+    field[index]["state"] += field[right]["bomb"] if rightA else 0
+    field[index]["state"] += field[aboveRight]["bomb"] if aboveA and rightA else 0
+    field[index]["state"] += field[aboveLeft]["bomb"] if aboveA and leftA else 0
+    field[index]["state"] += field[belowRight]["bomb"] if belowA and rightA else 0
+    field[index]["state"] += field[belowLeft]["bomb"] if belowA and leftA else 0
 
 
 def main():
@@ -108,5 +113,6 @@ def main():
 
 main()
 generateField()
-checkAbove(15)
+for i in range(spaces):
+    check(i)
 viewField()
