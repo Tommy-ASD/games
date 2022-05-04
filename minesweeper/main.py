@@ -1,3 +1,4 @@
+from lib2to3.pytree import convert
 import random
 
 field = []
@@ -5,6 +6,7 @@ xField = []
 length = 10
 height = 7
 spaces = length * height
+running = True
 
 fieldState = {
     "played": False,
@@ -17,18 +19,23 @@ fieldState = {
 
 # TODO: make it possible to play using X/Y positions and more stuff
 def playField(space, type):
-
+    global running
     match type:
         # Type 0: play
         case 0:
             if field[space]["played"]:
-                return 0
+                print("Cannot play an already played space")
+                return
             if field[space]["flagged"]:
-                return 1
+                print("Cannot play a flagged space, unflag first")
+                return
             if field[space]["bomb"]:
                 for i in field:
                     if i["bomb"]:
                         i["display"] = "b"
+                print("fucking dumbass lmao")
+                running = False
+                return
             else:
                 field[space]["display"] = str(field[space]["neighbors"])
                 field[space]["played"] = True
@@ -37,6 +44,8 @@ def playField(space, type):
             if not field[space]["played"]:
                 field[space]["flagged"] = not field[space]["flagged"]
                 field[space]["display"] = "f" if field[space]["flagged"] else "▮"
+            else:
+                print("Cannot flag a played space")
 
 
 def generateField():
@@ -101,15 +110,29 @@ def checkHorizontal(index):
     field[index]["neighbors"] += field[belowLeft]["bomb"] if belowA and leftA else 0
 
 
-def main():
+def convertToIndex(x, y):
+    adjustedY = (y - 1) * length
+    adjustedX = x - 1
+    index = adjustedX + adjustedY
+    print(index)
+    return index
 
-    pass
 
-
-main()
 generateField()
 for i in range(spaces):
     checkHorizontal(i)
+
+
 while True:
+    running = True
     viewField()
-    playField(int(input()), int(input()))
+    while running:
+        playField(
+            convertToIndex(
+                int(input("Pick X position: ")), int(input("Pick Y position: "))
+            ),
+            int(input()),
+        )
+        viewField()
+    generateField()
+    input("Play again? (Enter)")
