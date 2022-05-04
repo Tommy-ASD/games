@@ -94,7 +94,7 @@ def getNeighbors(index):
     belowA = False
     leftA = True
     rightA = True
-    if index - length > 0:
+    if index - length >= 0:
         aboveA = True
     if index + length < spaces:
         belowA = True
@@ -199,7 +199,6 @@ def convertToIndex(x, y):
     adjustedY = (y - 1) * length
     adjustedX = x - 1
     index = adjustedX + adjustedY
-    print(index)
     return index
 
 
