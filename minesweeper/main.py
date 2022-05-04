@@ -178,6 +178,7 @@ def check0(index):
         rightA,
     ) = getNeighbors(index)
     if field[index]["neighbors"] == 0:
+        # if you try to do the function with a non-existing space, an error will occur
         check0(above) if aboveA else None
         check0(below) if belowA else None
         check0(left) if leftA else None
@@ -237,6 +238,6 @@ while True:
             ),
             int(input()),
         )
-        viewField()
         checkWin()
+        viewField()
     input("Play again? (Enter)")
