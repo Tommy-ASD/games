@@ -12,6 +12,7 @@ fieldState = {
     "played": False,
     "bomb": False,
     "flagged": False,
+    "checkedFor0": False,
     "neighbors": 0,
     # display can be neighbor amount, bomb (b) or flagged (f)
     "display": "▮",
@@ -39,6 +40,7 @@ def playField(space, type):
             else:
                 field[space]["display"] = str(field[space]["neighbors"])
                 field[space]["played"] = True
+                check0(space)
         # Type 1: flag
         case 1:
             if not field[space]["played"]:
@@ -75,7 +77,7 @@ def viewField():
     print(msg)
 
 
-def check(index):
+def getNeighbors(index):
     global field, spaces
     if field[index]["display"] == "b":
         return
@@ -130,7 +132,7 @@ def updateNeighbors(index):
         belowA,
         leftA,
         rightA,
-    ) = check(index)
+    ) = getNeighbors(index)
     field[index]["neighbors"] += field[above]["bomb"] if aboveA else 0
     field[index]["neighbors"] += field[below]["bomb"] if belowA else 0
     field[index]["neighbors"] += field[left]["bomb"] if leftA else 0
@@ -139,6 +141,37 @@ def updateNeighbors(index):
     field[index]["neighbors"] += field[aboveLeft]["bomb"] if aboveA and leftA else 0
     field[index]["neighbors"] += field[belowRight]["bomb"] if belowA and rightA else 0
     field[index]["neighbors"] += field[belowLeft]["bomb"] if belowA and leftA else 0
+
+
+def check0(index):
+    if field[index]["checkedFor0"] or field[index]["bomb"] or field[index]["flagged"]:
+        return
+    field[index]["checkedFor0"] = True
+    field[index]["played"] = True
+    field[index]["display"] = str(field[index]["neighbors"])
+    (
+        above,
+        below,
+        left,
+        right,
+        aboveLeft,
+        aboveRight,
+        belowLeft,
+        belowRight,
+        aboveA,
+        belowA,
+        leftA,
+        rightA,
+    ) = getNeighbors(index)
+    if field[index]["neighbors"] == 0:
+        check0(above) if aboveA else None
+        check0(below) if belowA else None
+        check0(left) if leftA else None
+        check0(right) if rightA else None
+        check0(aboveLeft) if aboveA and leftA else None
+        check0(aboveRight) if aboveA and rightA else None
+        check0(belowLeft) if belowA and leftA else None
+        check0(belowRight) if belowA and rightA else None
 
 
 def convertToIndex(x, y):
