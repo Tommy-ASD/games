@@ -96,7 +96,7 @@ def getNeighbors(index):
     rightA = True
     if index - length >= 0:
         aboveA = True
-    if index + length < spaces:
+    if index + length <= spaces:
         belowA = True
     if index % length == length - 1:
         rightA = False
