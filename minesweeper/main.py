@@ -1,13 +1,5 @@
 import random
 
-field = []
-xField = []
-length = 10
-height = 7
-flags = 0
-spaces = length * height
-bombs = spaces / 5
-running = True
 
 fieldState = {
     "played": False,
@@ -185,6 +177,7 @@ def check0(index):
 
 
 def checkWin():
+    global running
     boolList = []
     for i in field:
         if i["bomb"]:
@@ -192,9 +185,9 @@ def checkWin():
                 boolList.append(True)
             else:
                 boolList.append(False)
-            if all(boolList):
-                print("You won")
-                running = False
+    if all(boolList):
+        print("You won")
+        running = False
 
 
 def convertToIndex(x, y):
@@ -205,6 +198,16 @@ def convertToIndex(x, y):
 
 
 while True:
+    field = []
+    length = int(input("Enter how wide the grid should be: "))
+    height = int(input("Enter how high the grid should be: "))
+    spaces = length * height
+    bombs = int(
+        input(
+            "Enter how many bombs the grid should have (CANNOT BE GREATER THAN GRID SIZE): "
+        )
+    )
+    flags = 0
     running = True
     generateField(
         convertToIndex(
