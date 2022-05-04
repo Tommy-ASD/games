@@ -50,7 +50,7 @@ def playField(space, type):
                 print("Cannot flag a played space")
 
 
-def generateField():
+def generateField(index, type):
     global spaces, field, fieldState
     bombs = spaces / 5
 
@@ -59,9 +59,12 @@ def generateField():
         field.append(fieldState.copy())
     while bombs > 0:
         rand = random.randrange(0, spaces)
-        if not field[rand]["bomb"]:
+        if not field[rand]["bomb"] and rand != index:
             field[rand]["bomb"] = True
             bombs -= 1
+    for i in range(spaces):
+        updateNeighbors(i)
+    playField(index, type)
 
 
 def viewField():
@@ -174,6 +177,16 @@ def check0(index):
         check0(belowRight) if belowA and rightA else None
 
 
+def checkWin():
+    boolList = []
+    for i in field:
+        if i["flagged"]:
+            if i["bomb"]:
+                boolList.append(True)
+            else:
+                boolList.append(False)
+
+
 def convertToIndex(x, y):
     adjustedY = (y - 1) * length
     adjustedX = x - 1
@@ -182,9 +195,9 @@ def convertToIndex(x, y):
     return index
 
 
-generateField()
-for i in range(spaces):
-    updateNeighbors(i)
+generateField(
+    convertToIndex(int(input("Pick X position: ")), int(input("Pick Y position: "))), 0
+)
 
 
 while True:
