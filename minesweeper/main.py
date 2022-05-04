@@ -15,11 +15,10 @@ fieldState = {
     "flagged": False,
     "checkedFor0": False,
     "neighbors": 0,
-    # display can be neighbor amount, bomb (b) or flagged (f)
     "display": "▮",
 }
 
-# TODO: make it possible to play using X/Y positions and more stuff
+
 def playField(space, type):
     global running, flags, bombs
     match type:
@@ -64,11 +63,12 @@ def generateField(index, type):
     # adds a fieldstate dictionary to all spaces
     for i in range(spaces):
         field.append(fieldState.copy())
-    while bombs > 0:
+    tempBombs = bombs
+    while tempBombs > 0:
         rand = random.randrange(0, spaces)
         if not field[rand]["bomb"] and rand != index:
             field[rand]["bomb"] = True
-            bombs -= 1
+            tempBombs -= 1
     for i in range(spaces):
         updateNeighbors(i)
     playField(index, type)
@@ -204,12 +204,14 @@ def convertToIndex(x, y):
     return index
 
 
-generateField(
-    convertToIndex(int(input("Pick X position: ")), int(input("Pick Y position: "))), 0
-)
-
-
 while True:
+    running = True
+    generateField(
+        convertToIndex(
+            int(input("Pick X position: ")), int(input("Pick Y position: "))
+        ),
+        0,
+    )
     viewField()
     while running:
         playField(
@@ -221,10 +223,3 @@ while True:
         viewField()
         checkWin()
     input("Play again? (Enter)")
-    generateField(
-        convertToIndex(
-            int(input("Pick X position: ")), int(input("Pick Y position: "))
-        ),
-        0,
-    )
-    running = True
