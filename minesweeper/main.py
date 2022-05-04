@@ -50,7 +50,7 @@ def playField(space, type):
 
 def generateField():
     global spaces, field, fieldState
-    bombs = spaces / 3
+    bombs = spaces / 5
 
     # adds a fieldstate dictionary to all spaces
     for i in range(spaces):
@@ -75,7 +75,7 @@ def viewField():
     print(msg)
 
 
-def checkHorizontal(index):
+def check(index):
     global field, spaces
     if field[index]["display"] == "b":
         return
@@ -120,11 +120,10 @@ def convertToIndex(x, y):
 
 generateField()
 for i in range(spaces):
-    checkHorizontal(i)
+    check(i)
 
 
 while True:
-    running = True
     viewField()
     while running:
         playField(
@@ -136,3 +135,4 @@ while True:
         viewField()
     generateField()
     input("Play again? (Enter)")
+    running = True
