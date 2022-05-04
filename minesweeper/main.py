@@ -88,7 +88,7 @@ def checkHorizontal(index):
     field[index]["state"] += field[below]["bomb"] if belowA else 0
     leftA = True
     rightA = True
-    if index % length == 9:
+    if index % length == length - 1:
         rightA = False
     if index % length == 0:
         leftA = False
