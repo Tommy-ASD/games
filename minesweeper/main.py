@@ -186,6 +186,8 @@ def checkWin():
                 boolList.append(True)
             else:
                 boolList.append(False)
+            if all(boolList):
+                pass
 
 
 def convertToIndex(x, y):
@@ -211,6 +213,12 @@ while True:
             int(input()),
         )
         viewField()
-    generateField()
+        checkWin()
     input("Play again? (Enter)")
+    generateField(
+        convertToIndex(
+            int(input("Pick X position: ")), int(input("Pick Y position: "))
+        ),
+        0,
+    )
     running = True
