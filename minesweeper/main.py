@@ -82,28 +82,28 @@ def check(index):
     # Direction available
     aboveA = False
     belowA = False
+    leftA = True
+    rightA = True
     if index - length > 0:
         aboveA = True
     if index + length < spaces:
         belowA = True
-    above = index - length
-    below = index + length
-    field[index]["neighbors"] += field[above]["bomb"] if aboveA else 0
-    field[index]["neighbors"] += field[below]["bomb"] if belowA else 0
-    leftA = True
-    rightA = True
     if index % length == length - 1:
         rightA = False
     if index % length == 0:
         leftA = False
+    above = index - length
+    below = index + length
     left = index - 1
     right = index + 1
-    field[index]["neighbors"] += field[left]["bomb"] if leftA else 0
-    field[index]["neighbors"] += field[right]["bomb"] if rightA else 0
     aboveLeft = above - 1
     aboveRight = above + 1
     belowLeft = below - 1
     belowRight = below + 1
+    field[index]["neighbors"] += field[above]["bomb"] if aboveA else 0
+    field[index]["neighbors"] += field[below]["bomb"] if belowA else 0
+    field[index]["neighbors"] += field[left]["bomb"] if leftA else 0
+    field[index]["neighbors"] += field[right]["bomb"] if rightA else 0
     field[index]["neighbors"] += field[aboveRight]["bomb"] if aboveA and rightA else 0
     field[index]["neighbors"] += field[aboveLeft]["bomb"] if aboveA and leftA else 0
     field[index]["neighbors"] += field[belowRight]["bomb"] if belowA and rightA else 0
