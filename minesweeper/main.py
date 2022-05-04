@@ -100,6 +100,37 @@ def check(index):
     aboveRight = above + 1
     belowLeft = below - 1
     belowRight = below + 1
+    return (
+        above,
+        below,
+        left,
+        right,
+        aboveLeft,
+        aboveRight,
+        belowLeft,
+        belowRight,
+        aboveA,
+        belowA,
+        leftA,
+        rightA,
+    )
+
+
+def updateNeighbors(index):
+    (
+        above,
+        below,
+        left,
+        right,
+        aboveLeft,
+        aboveRight,
+        belowLeft,
+        belowRight,
+        aboveA,
+        belowA,
+        leftA,
+        rightA,
+    ) = check(index)
     field[index]["neighbors"] += field[above]["bomb"] if aboveA else 0
     field[index]["neighbors"] += field[below]["bomb"] if belowA else 0
     field[index]["neighbors"] += field[left]["bomb"] if leftA else 0
@@ -120,7 +151,7 @@ def convertToIndex(x, y):
 
 generateField()
 for i in range(spaces):
-    check(i)
+    updateNeighbors(i)
 
 
 while True:
