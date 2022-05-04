@@ -185,13 +185,14 @@ def check0(index):
 def checkWin():
     boolList = []
     for i in field:
-        if i["flagged"]:
-            if i["bomb"]:
+        if i["bomb"]:
+            if i["flagged"]:
                 boolList.append(True)
             else:
                 boolList.append(False)
             if all(boolList):
-                pass
+                print("You won")
+                running = False
 
 
 def convertToIndex(x, y):
