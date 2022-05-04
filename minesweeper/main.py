@@ -35,6 +35,8 @@ def playField(space, type):
                 for i in field:
                     if i["bomb"]:
                         i["display"] = "b"
+                    else:
+                        i["display"] = str(i["neighbors"])
                 print("fucking dumbass lmao")
                 field[space]["display"] = "d"
                 running = False
@@ -96,7 +98,7 @@ def getNeighbors(index):
     rightA = True
     if index - length >= 0:
         aboveA = True
-    if index + length <= spaces:
+    if index + length < spaces:
         belowA = True
     if index % length == length - 1:
         rightA = False
