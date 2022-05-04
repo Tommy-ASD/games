@@ -1,11 +1,12 @@
-from lib2to3.pytree import convert
 import random
 
 field = []
 xField = []
 length = 10
 height = 7
+flags = 0
 spaces = length * height
+bombs = spaces / 5
 running = True
 
 fieldState = {
@@ -20,7 +21,7 @@ fieldState = {
 
 # TODO: make it possible to play using X/Y positions and more stuff
 def playField(space, type):
-    global running
+    global running, flags, bombs
     match type:
         # Type 0: play
         case 0:
@@ -45,15 +46,18 @@ def playField(space, type):
         # Type 1: flag
         case 1:
             if not field[space]["played"]:
+                if flags + 1 > bombs and not field[space]["flagged"]:
+                    print("Max flags reached")
+                    return
                 field[space]["flagged"] = not field[space]["flagged"]
                 field[space]["display"] = "f" if field[space]["flagged"] else "▮"
+                flags += 1 if field[space]["flagged"] else -1
             else:
                 print("Cannot flag a played space")
 
 
 def generateField(index, type):
-    global spaces, field, fieldState
-    bombs = spaces / 5
+    global spaces, field, fieldState, bombs
 
     # adds a fieldstate dictionary to all spaces
     for i in range(spaces):
