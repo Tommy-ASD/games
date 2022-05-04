@@ -2,8 +2,8 @@ import random
 
 field = []
 xField = []
-length = 10
-height = 7
+length = 30
+height = 15
 spaces = length * height
 # O O O O O 1 1 1 O O
 # O O O O O 1 B 1 O O
@@ -47,9 +47,6 @@ def generateField():
     # adds a fieldstate dictionary to all spaces
     for i in range(spaces):
         field.append(fieldState.copy())
-        x = length - (i % length)
-        field[i]["x"] = x
-        field[i]["y"] = height - (i % height)
     while bombs > 0:
         rand = random.randrange(0, spaces)
         if not field[rand]["bomb"]:
@@ -78,9 +75,9 @@ def checkHorizontal(index):
     # Direction available
     aboveA = False
     belowA = False
-    if index - 10 > 0:
+    if index - length > 0:
         aboveA = True
-    if index + 10 < spaces:
+    if index + length < spaces:
         belowA = True
     above = index - length
     below = index + length
