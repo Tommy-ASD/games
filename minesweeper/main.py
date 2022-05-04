@@ -34,6 +34,7 @@ def playField(space, type):
                     if i["bomb"]:
                         i["display"] = "b"
                 print("fucking dumbass lmao")
+                field[space]["display"] = "d"
                 running = False
                 return
             else:
