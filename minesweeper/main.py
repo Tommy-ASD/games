@@ -5,27 +5,12 @@ xField = []
 length = 30
 height = 15
 spaces = length * height
-# O O O O O 1 1 1 O O
-# O O O O O 1 B 1 O O
-# O O O O 1 3 3 2 O O
-# O O O O 1 B B 1 O O
-# O O O O 1 2 2 1 O O
-# O O O O O O O O O O
-# O O O O O O O O O O
 
-
-# stores information abouta space
-# fieldState = {
-#     "played": False,
-#     "bomb": False,
-#     "flagged": False,
-#     "neighbors": 0,
-#     "state": "a",
-# }
 fieldState = {
     "bomb": False,
     "flagged": False,
-    # state can be neighbor amount or bomb (9)
+    "neighbors": 0,
+    # state can be neighbor amount or bomb (b)
     "state": 0,
 }
 
