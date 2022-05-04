@@ -88,22 +88,34 @@ def getNeighbors(index):
     belowA = False
     leftA = True
     rightA = True
+    # index - length is the one exactly above. if it does not exist, do not add the space there
     if index - length >= 0:
         aboveA = True
+    # same as previous, except index + length is exactly the one below
     if index + length < spaces:
         belowA = True
+    # example:
+    # length = 10
+    # length - 1 = 9
+    # if index % 10 returns 9, that means you are at the right edge of the grid
+    # if index % 10 returns 0, that means you are at the left edge
     if index % length == length - 1:
         rightA = False
     if index % length == 0:
         leftA = False
+    # if you remove/add length, you get the one exactly above
     above = index - length
     below = index + length
+    # if you add/remove 1, you get the one to the right/left
     left = index - 1
     right = index + 1
+    # same logic as previous applies here, just more than once
     aboveLeft = above - 1
     aboveRight = above + 1
     belowLeft = below - 1
     belowRight = below + 1
+    # optimizable
+    # use arrays?
     return (
         above,
         below,
@@ -191,6 +203,8 @@ def checkWin():
 
 
 def convertToIndex(x, y):
+    # input y: 10
+    # output y: 9 * length
     adjustedY = (y - 1) * length
     adjustedX = x - 1
     index = adjustedX + adjustedY
