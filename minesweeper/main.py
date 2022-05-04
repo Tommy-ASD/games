@@ -23,15 +23,17 @@ def playField(space, type):
                 print("Cannot play a flagged space, unflag first")
                 return
             if field[space]["bomb"]:
+                # display all spaces
                 for i in field:
-                    if i["bomb"]:
+                    if i["bomb"] and not i["flagged"]:
                         i["display"] = "b"
                     else:
                         i["display"] = str(i["neighbors"])
                 print("fucking dumbass lmao")
+                # show space that caused loss
                 field[space]["display"] = "d"
+                # restart program
                 running = False
-                return
             else:
                 field[space]["display"] = str(field[space]["neighbors"])
                 field[space]["played"] = True
@@ -39,11 +41,15 @@ def playField(space, type):
         # Type 1: flag
         case 1:
             if not field[space]["played"]:
+                # if a new flag added surpasses bomb amount, it won't work
                 if flags + 1 > bombs and not field[space]["flagged"]:
                     print("Max flags reached")
                     return
+                # flag state on/off
                 field[space]["flagged"] = not field[space]["flagged"]
+                # display on/off
                 field[space]["display"] = "f" if field[space]["flagged"] else "▮"
+                # flag count on/off
                 flags += 1 if field[space]["flagged"] else -1
             else:
                 print("Cannot flag a played space")
@@ -58,6 +64,7 @@ def generateField(index, type):
     tempBombs = bombs
     while tempBombs > 0:
         rand = random.randrange(0, spaces)
+        # if space not already bomb and not chosen index, pick space
         if not field[rand]["bomb"] and rand != index:
             field[rand]["bomb"] = True
             tempBombs -= 1
@@ -72,8 +79,10 @@ def viewField():
     for i in range(spaces):
         j += 1
         msg += str(field[i]["display"])
+        # makes it look better
         msg += " "
         if j >= length:
+            # if j > length, new line
             msg += "\n"
             j = 0
     print(msg)
@@ -158,10 +167,15 @@ def updateNeighbors(index):
 
 
 def check0(index):
+    # if i don't add if checked for 0, program will cause infinite recursion
+    # the others should be relatively obvious
     if field[index]["checkedFor0"] or field[index]["bomb"] or field[index]["flagged"]:
         return
     field[index]["checkedFor0"] = True
+    # the following has essentially the same effect as the playField() function
+    # spaces checked for 0 should also count as played
     field[index]["played"] = True
+    # displays correctly after being played
     field[index]["display"] = str(field[index]["neighbors"])
     (
         above,
