@@ -71,35 +71,35 @@ def viewField():
     print(msg)
 
 
-def check(index):
+def checkHorizontal(index):
     global field, spaces
     if field[index]["state"] == "b":
         return
     # Direction available
-    leftA = False
-    rightA = False
     aboveA = False
     belowA = False
     if index - 10 > 0:
         aboveA = True
     if index + 10 < spaces:
         belowA = True
-    if index + 1 % length == 0:
-        rightA = True
-    if index - 1 % length == 9:
-        leftA = True
     above = index - length
     below = index + length
+    field[index]["state"] += field[above]["bomb"] if aboveA else 0
+    field[index]["state"] += field[below]["bomb"] if belowA else 0
+    leftA = True
+    rightA = True
+    if index % length == 9:
+        rightA = False
+    if index % length == 0:
+        leftA = False
     left = index - 1
     right = index + 1
+    field[index]["state"] += field[left]["bomb"] if leftA else 0
+    field[index]["state"] += field[right]["bomb"] if rightA else 0
     aboveLeft = above - 1
     aboveRight = above + 1
     belowLeft = below - 1
     belowRight = below + 1
-    field[index]["state"] += field[above]["bomb"] if aboveA else 0
-    field[index]["state"] += field[below]["bomb"] if belowA else 0
-    field[index]["state"] += field[left]["bomb"] if leftA else 0
-    field[index]["state"] += field[right]["bomb"] if rightA else 0
     field[index]["state"] += field[aboveRight]["bomb"] if aboveA and rightA else 0
     field[index]["state"] += field[aboveLeft]["bomb"] if aboveA and leftA else 0
     field[index]["state"] += field[belowRight]["bomb"] if belowA and rightA else 0
@@ -114,5 +114,6 @@ def main():
 main()
 generateField()
 for i in range(spaces):
-    check(i)
+    checkHorizontal(i)
+
 viewField()
