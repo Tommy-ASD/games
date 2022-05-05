@@ -94,35 +94,41 @@ class template:
         return index
 
     def getBelow(self, index):
-        belowA = False
-        if index + self.length < self.spaces:
-            belowA = True
+        # adding length gives index directly below
         below = index + self.length
-        if not belowA:
+        # if there is no line below
+        if not index + self.length < self.spaces:
             print(f"{self.field[index]['state']} won")
             return True
+        # only proceed if next index is played by same player
         if (
             self.field[below]["state"] == self.field[index]["state"]
             and self.field[index]["state"] != "▮"
         ):
-            return self.getBelow(below)
+            self.getBelow(below)
 
     def getRight(self, index):
         right = index + 1
+        # if index is at the very right side of the screen
+        # this function always starts at the very left side
+        if right % self.length == 0:
+            print(f"{self.field[index]['state']} won")
+            return True
+        # only proceed if next index is played by same player
         if (
             self.field[right]["state"] == self.field[index]["state"]
             and self.field[index]["state"] != "▮"
         ):
             self.getBelow(right)
-        if right % self.length == 0:
-            print(f"{self.field[index]['state']} won")
-            return True
 
     def getBottomRight(self, index):
+        # if index is bottom-right of grid
         if index == self.length**2 - 1:
             print(f"{self.field[index]['state']} won")
             return True
+        # bottom-right of current index's position
         bottomRight = (index + self.length) + 1
+        # only proceed if next index is played by same player
         if (
             self.field[bottomRight]["state"] == self.field[index]["state"]
             and self.field[index]["state"] != "▮"
@@ -130,10 +136,13 @@ class template:
             self.getBottomRight(bottomRight)
 
     def getTopRight(self, index):
+        # if index is top-right of grid
         if index == self.length - 1:
             print(f"{self.field[index]['state']} won")
             return True
+        # top-right of current index's position
         topRight = (index - self.length) + 1
+        # only proceed if next index is played by same player
         if (
             self.field[topRight]["state"] == self.field[index]["state"]
             and self.field[index]["state"] != "▮"
@@ -143,6 +152,8 @@ class template:
         pass
 
     def checkWins(self):
+        # check all rows/coloums for win
+        # can be optimized to only check those that apply to last played index
         for i in range(self.length):
             self.getBelow(i)
             self.getRight(self.length * i)
