@@ -5,6 +5,7 @@ class template:
         self.spaces = self.length**2
         self.field = []
         self.fieldData = {"state": "▮"}
+        self.running = True
 
     def createField(self):
         for i in range(self.spaces):
@@ -51,7 +52,7 @@ class template:
             self.field[below]["state"] == self.field[index]["state"]
             and self.field[index]["state"] != "▮"
         ):
-            self.getBelow(below)
+            return self.getBelow(below)
 
     def getRight(self, index):
         right = index + 1
@@ -65,7 +66,7 @@ class template:
             self.field[right]["state"] == self.field[index]["state"]
             and self.field[index]["state"] != "▮"
         ):
-            self.getBelow(right)
+            return self.getBelow(right)
 
     def getBottomRight(self, index):
         # if index is bottom-right of grid
@@ -79,7 +80,7 @@ class template:
             self.field[bottomRight]["state"] == self.field[index]["state"]
             and self.field[index]["state"] != "▮"
         ):
-            self.getBottomRight(bottomRight)
+            return self.getBottomRight(bottomRight)
 
     def getTopRight(self, index):
         # if index is top-right of grid
@@ -93,26 +94,34 @@ class template:
             self.field[topRight]["state"] == self.field[index]["state"]
             and self.field[index]["state"] != "▮"
         ):
-            self.getTopRight(topRight)
+            return self.getTopRight(topRight)
 
         pass
 
     def checkWins(self):
         # check all rows/coloums for win
         # can be optimized to only check those that apply to last played index
+        boolList = []
         for i in range(self.length):
-            self.getBelow(i)
-            self.getRight(self.length * i)
+            boolList.append(self.getBelow(i))
+            boolList.append(self.getRight(self.length * i))
         # @PARAM (self.length**2 + 1) is the index after the last one
         # - self.length is to get the top-right
-        self.getTopRight((self.length**2) - self.length)
-        self.getBottomRight(0)
-        pass
+        boolList.append(self.getTopRight((self.length**2) - self.length))
+        boolList.append(self.getBottomRight(0))
+        if any(boolList):
+            self.running = False
 
 
-temp = template()
-temp.createField()
 while True:
-    temp.playField(temp.convertToIndex(int(input()), int(input())))
-    temp.viewField()
-    temp.checkWins()
+    input("Press enter to continue: ")
+    temp = template()
+    temp.createField()
+    while temp.running:
+        temp.playField(
+            temp.convertToIndex(
+                int(input("Enter X coords: ")), int(input("Enter Y coords: "))
+            )
+        )
+        temp.viewField()
+        temp.checkWins()
