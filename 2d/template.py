@@ -8,7 +8,7 @@ class template:
         self.spaces = self.height * self.length
         self.objectAmount = self.spaces / 3
         self.field = []
-        self.fieldData = {"state": "a", "neighbors": 0}
+        self.fieldData = {"state": "▮", "neighbors": 0}
 
     def createField(self):
         for i in range(self.spaces):
