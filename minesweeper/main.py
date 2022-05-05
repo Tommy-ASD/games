@@ -236,6 +236,14 @@ class minesweeper:
             print("You won")
             self.running = False
 
+    def convertToIndex(self, x, y):
+        # input y: 10
+        # output y: 9 * length
+        adjustedY = (y - 1) * self.length
+        adjustedX = x - 1
+        index = adjustedX + adjustedY
+        return index
+
     def main(self):
         self.viewField()
         self.playField(
@@ -245,14 +253,6 @@ class minesweeper:
             int(input()),
         )
         self.checkWin()
-
-    def convertToIndex(self, x, y):
-        # input y: 10
-        # output y: 9 * length
-        adjustedY = (y - 1) * self.length
-        adjustedX = x - 1
-        index = adjustedX + adjustedY
-        return index
 
 
 MS = minesweeper(
