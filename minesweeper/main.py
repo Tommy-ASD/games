@@ -27,50 +27,6 @@ class minesweeper:
             0,
         )
 
-    def playField(self, space, type):
-        match type:
-            # Type 0: play
-            case 0:
-                if self.field[space]["played"]:
-                    print("Cannot play an already played space")
-                    return
-                if self.field[space]["flagged"]:
-                    print("Cannot play a flagged space, unflag first")
-                    return
-                if self.field[space]["bomb"]:
-                    # display all spaces
-                    for i in self.field:
-                        if i["bomb"] and not i["flagged"]:
-                            i["display"] = "b"
-                        else:
-                            i["display"] = str(i["neighbors"])
-                    print("fucking dumbass lmao")
-                    # show space that caused loss
-                    self.field[space]["display"] = "d"
-                    # restart program
-                    self.running = False
-                else:
-                    self.field[space]["display"] = str(self.field[space]["neighbors"])
-                    self.field[space]["played"] = True
-                    self.check0(space)
-            # Type 1: flag
-            case 1:
-                if not self.field[space]["played"]:
-                    # if a new flag added surpasses bomb amount, it won't work
-                    if self.flags + 1 > self.bombs and not self.field[space]["flagged"]:
-                        print("Max flags reached")
-                        return
-                    # flag state on/off
-                    self.field[space]["flagged"] = not self.field[space]["flagged"]
-                    # display on/off
-                    self.field[space]["display"] = (
-                        "f" if self.field[space]["flagged"] else "▮"
-                    )
-                    # flag count on/off
-                    self.flags += 1 if self.field[space]["flagged"] else -1
-                else:
-                    print("Cannot flag a played space")
-
     def generateField(self, index, type):
 
         # adds a fieldstate dictionary to all spaces
@@ -87,19 +43,37 @@ class minesweeper:
             self.updateNeighbors(i)
         self.playField(index, type)
 
-    def viewField(self):
-        j = 0
-        msg = ""
-        for i in range(self.spaces):
-            j += 1
-            msg += str(self.field[i]["display"])
-            # makes it look better
-            msg += " "
-            if j >= self.length:
-                # if j > length, new line
-                msg += "\n"
-                j = 0
-        print(msg)
+    def updateNeighbors(self, index):
+        (
+            above,
+            below,
+            left,
+            right,
+            aboveLeft,
+            aboveRight,
+            belowLeft,
+            belowRight,
+            aboveA,
+            belowA,
+            leftA,
+            rightA,
+        ) = self.getNeighbors(index)
+        self.field[index]["neighbors"] += self.field[above]["bomb"] if aboveA else 0
+        self.field[index]["neighbors"] += self.field[below]["bomb"] if belowA else 0
+        self.field[index]["neighbors"] += self.field[left]["bomb"] if leftA else 0
+        self.field[index]["neighbors"] += self.field[right]["bomb"] if rightA else 0
+        self.field[index]["neighbors"] += (
+            self.field[aboveRight]["bomb"] if aboveA and rightA else 0
+        )
+        self.field[index]["neighbors"] += (
+            self.field[aboveLeft]["bomb"] if aboveA and leftA else 0
+        )
+        self.field[index]["neighbors"] += (
+            self.field[belowRight]["bomb"] if belowA and rightA else 0
+        )
+        self.field[index]["neighbors"] += (
+            self.field[belowLeft]["bomb"] if belowA and leftA else 0
+        )
 
     def getNeighbors(self, index):
         if self.field[index]["display"] == "b":
@@ -152,37 +126,81 @@ class minesweeper:
             rightA,
         )
 
-    def updateNeighbors(self, index):
-        (
-            above,
-            below,
-            left,
-            right,
-            aboveLeft,
-            aboveRight,
-            belowLeft,
-            belowRight,
-            aboveA,
-            belowA,
-            leftA,
-            rightA,
-        ) = self.getNeighbors(index)
-        self.field[index]["neighbors"] += self.field[above]["bomb"] if aboveA else 0
-        self.field[index]["neighbors"] += self.field[below]["bomb"] if belowA else 0
-        self.field[index]["neighbors"] += self.field[left]["bomb"] if leftA else 0
-        self.field[index]["neighbors"] += self.field[right]["bomb"] if rightA else 0
-        self.field[index]["neighbors"] += (
-            self.field[aboveRight]["bomb"] if aboveA and rightA else 0
+    def convertToIndex(self, x, y):
+        # input y: 10
+        # output y: 9 * length
+        adjustedY = (y - 1) * self.length
+        adjustedX = x - 1
+        index = adjustedX + adjustedY
+        return index
+
+    def main(self):
+        self.viewField()
+        self.playField(
+            self.convertToIndex(
+                int(input("Pick X position: ")), int(input("Pick Y position: "))
+            ),
+            int(input()),
         )
-        self.field[index]["neighbors"] += (
-            self.field[aboveLeft]["bomb"] if aboveA and leftA else 0
-        )
-        self.field[index]["neighbors"] += (
-            self.field[belowRight]["bomb"] if belowA and rightA else 0
-        )
-        self.field[index]["neighbors"] += (
-            self.field[belowLeft]["bomb"] if belowA and leftA else 0
-        )
+        self.checkWin()
+
+    def viewField(self):
+        j = 0
+        msg = ""
+        for i in range(self.spaces):
+            j += 1
+            msg += str(self.field[i]["display"])
+            # makes it look better
+            msg += " "
+            if j >= self.length:
+                # if j > length, new line
+                msg += "\n"
+                j = 0
+        print(msg)
+
+    def playField(self, space, type):
+        match type:
+            # Type 0: play
+            case 0:
+                if self.field[space]["played"]:
+                    print("Cannot play an already played space")
+                    return
+                if self.field[space]["flagged"]:
+                    print("Cannot play a flagged space, unflag first")
+                    return
+                if self.field[space]["bomb"]:
+                    # display all spaces
+                    for i in self.field:
+                        if i["bomb"] and not i["flagged"]:
+                            i["display"] = "b"
+                        else:
+                            i["display"] = str(i["neighbors"])
+                    print("fucking dumbass lmao")
+                    # show space that caused loss
+                    self.field[space]["display"] = "d"
+                    # restart program
+                    self.running = False
+                else:
+                    self.field[space]["display"] = str(self.field[space]["neighbors"])
+                    self.field[space]["played"] = True
+                    self.check0(space)
+            # Type 1: flag
+            case 1:
+                if not self.field[space]["played"]:
+                    # if a new flag added surpasses bomb amount, it won't work
+                    if self.flags + 1 > self.bombs and not self.field[space]["flagged"]:
+                        print("Max flags reached")
+                        return
+                    # flag state on/off
+                    self.field[space]["flagged"] = not self.field[space]["flagged"]
+                    # display on/off
+                    self.field[space]["display"] = (
+                        "f" if self.field[space]["flagged"] else "▮"
+                    )
+                    # flag count on/off
+                    self.flags += 1 if self.field[space]["flagged"] else -1
+                else:
+                    print("Cannot flag a played space")
 
     def check0(self, index):
         # if i don't add if checked for 0, program will cause infinite recursion
@@ -235,24 +253,6 @@ class minesweeper:
         if all(boolList):
             print("You won")
             self.running = False
-
-    def convertToIndex(self, x, y):
-        # input y: 10
-        # output y: 9 * length
-        adjustedY = (y - 1) * self.length
-        adjustedX = x - 1
-        index = adjustedX + adjustedY
-        return index
-
-    def main(self):
-        self.viewField()
-        self.playField(
-            self.convertToIndex(
-                int(input("Pick X position: ")), int(input("Pick Y position: "))
-            ),
-            int(input()),
-        )
-        self.checkWin()
 
 
 MS = minesweeper(
