@@ -5,8 +5,7 @@ class template:
     def __init__(self):
         self.player = False
         self.length = 3
-        self.height = 3
-        self.spaces = self.height * self.length
+        self.spaces = self.length**2
         self.field = []
         self.fieldData = {"state": "▮"}
 
@@ -94,9 +93,69 @@ class template:
         index = adjustedX + adjustedY
         return index
 
+    def getBelow(self, index):
+        belowA = False
+        if index + self.length < self.spaces:
+            belowA = True
+        below = index + self.length
+        if not belowA:
+            print(f"{self.field[index]['state']} won")
+            return True
+        if (
+            self.field[below]["state"] == self.field[index]["state"]
+            and self.field[index]["state"] != "▮"
+        ):
+            return self.getBelow(below)
+
+    def getRight(self, index):
+        right = index + 1
+        if (
+            self.field[right]["state"] == self.field[index]["state"]
+            and self.field[index]["state"] != "▮"
+        ):
+            self.getBelow(right)
+        if right % self.length == 0:
+            print(f"{self.field[index]['state']} won")
+            return True
+
+    def getBottomRight(self, index):
+        if index == self.length**2 - 1:
+            print(f"{self.field[index]['state']} won")
+            return True
+        bottomRight = (index + self.length) + 1
+        if (
+            self.field[bottomRight]["state"] == self.field[index]["state"]
+            and self.field[index]["state"] != "▮"
+        ):
+            self.getBottomRight(bottomRight)
+
+    def getTopRight(self, index):
+        if index == self.length - 1:
+            print(f"{self.field[index]['state']} won")
+            return True
+        topRight = (index - self.length) + 1
+        if (
+            self.field[topRight]["state"] == self.field[index]["state"]
+            and self.field[index]["state"] != "▮"
+        ):
+            self.getTopRight(topRight)
+
+        pass
+
+    def checkWins(self):
+        for i in range(self.length):
+            self.getBelow(i)
+            self.getRight(self.length * i)
+        # @PARAM (self.length**2 + 1) is the index after the last one
+        # - self.length is to get the top-right
+        self.getTopRight((self.length**2) - self.length)
+        self.getBottomRight(0)
+        pass
+
 
 temp = template()
 temp.createField()
 while True:
     temp.playField(temp.convertToIndex(int(input()), int(input())))
     temp.viewField()
+    temp.checkWins()
