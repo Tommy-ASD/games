@@ -231,35 +231,34 @@ class minesweeper:
             self.running = False
 
     def main(self):
-        while True:
-            self.field = []
-            self.length = int(input("Enter how wide the grid should be: "))
-            self.height = int(input("Enter how high the grid should be: "))
-            self.spaces = self.length * self.height
-            self.bombs = int(
-                input(
-                    "Enter how many bombs the grid should have (CANNOT BE GREATER THAN GRID SIZE): "
-                )
+        self.field = []
+        self.length = int(input("Enter how wide the grid should be: "))
+        self.height = int(input("Enter how high the grid should be: "))
+        self.spaces = self.length * self.height
+        self.bombs = int(
+            input(
+                "Enter how many bombs the grid should have (CANNOT BE GREATER THAN GRID SIZE): "
             )
-            self.flags = 0
-            self.running = True
-            self.generateField(
+        )
+        self.flags = 0
+        self.running = True
+        self.generateField(
+            self.convertToIndex(
+                int(input("Pick X position: ")), int(input("Pick Y position: "))
+            ),
+            0,
+        )
+        self.viewField()
+        while self.running:
+            self.playField(
                 self.convertToIndex(
                     int(input("Pick X position: ")), int(input("Pick Y position: "))
                 ),
-                0,
+                int(input()),
             )
+            self.checkWin()
             self.viewField()
-            while self.running:
-                self.playField(
-                    self.convertToIndex(
-                        int(input("Pick X position: ")), int(input("Pick Y position: "))
-                    ),
-                    int(input()),
-                )
-                self.checkWin()
-                self.viewField()
-            input("Play again? (Enter)")
+        input("Play again? (Enter)")
 
     def convertToIndex(self, x, y):
         # input y: 10
@@ -270,5 +269,6 @@ class minesweeper:
         return index
 
 
-MS = minesweeper()
-MS.main()
+while True:
+    MS = minesweeper()
+    MS.main()
