@@ -226,32 +226,37 @@ def convertToIndex(x, y):
     return index
 
 
-while True:
-    field = []
-    length = int(input("Enter how wide the grid should be: "))
-    height = int(input("Enter how high the grid should be: "))
-    spaces = length * height
-    bombs = int(
-        input(
-            "Enter how many bombs the grid should have (CANNOT BE GREATER THAN GRID SIZE): "
+def main():
+    global field, length, height, spaces, bombs, flags, running
+    while True:
+        field = []
+        length = int(input("Enter how wide the grid should be: "))
+        height = int(input("Enter how high the grid should be: "))
+        spaces = length * height
+        bombs = int(
+            input(
+                "Enter how many bombs the grid should have (CANNOT BE GREATER THAN GRID SIZE): "
+            )
         )
-    )
-    flags = 0
-    running = True
-    generateField(
-        convertToIndex(
-            int(input("Pick X position: ")), int(input("Pick Y position: "))
-        ),
-        0,
-    )
-    viewField()
-    while running:
-        playField(
+        flags = 0
+        running = True
+        generateField(
             convertToIndex(
                 int(input("Pick X position: ")), int(input("Pick Y position: "))
             ),
-            int(input()),
+            0,
         )
-        checkWin()
         viewField()
-    input("Play again? (Enter)")
+        while running:
+            playField(
+                convertToIndex(
+                    int(input("Pick X position: ")), int(input("Pick Y position: "))
+                ),
+                int(input()),
+            )
+            checkWin()
+            viewField()
+        input("Play again? (Enter)")
+
+
+main()
