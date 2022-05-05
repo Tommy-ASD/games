@@ -266,6 +266,7 @@ MS = minesweeper(
 )
 while True:
     if not MS.running:
+        input("Play again? (Enter)")
         MS = minesweeper(
             int(input("Enter how wide the grid should be: ")),
             int(input("Enter how high the grid should be: ")),
@@ -276,4 +277,3 @@ while True:
             ),
         )
     MS.main()
-    input("Play again? (Enter)")
