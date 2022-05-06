@@ -15,9 +15,9 @@ class template:
     def viewField(self):
         currentX = 0
         msg = ""
-        for i in range(self.spaces):
+        for i in self.field:
             currentX += 1
-            msg += self.field[i]["state"]
+            msg += i["state"]
             msg += " "
             # if current x is length, jump to next y
             if currentX % self.length == 0:
