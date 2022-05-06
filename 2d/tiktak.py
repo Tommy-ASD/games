@@ -37,15 +37,6 @@ class template:
         temp.viewField()
         temp.checkWins(adjustedX, adjustedY)
 
-    def convertToIndex(self, x, y):
-        # input y: 10
-        # output y: 9 * length
-        adjustedY = (y - 1) * self.length
-        adjustedX = x - 1
-        index = adjustedX + adjustedY
-        # self.convertToCoors(index)
-        return index
-
     def getBelow(self, index):
         # adding length gives index directly below
         below = index + self.length
