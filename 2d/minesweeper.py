@@ -147,9 +147,9 @@ class minesweeper:
     def viewField(self):
         j = 0
         msg = ""
-        for i in range(self.spaces):
+        for i in self.field:
             j += 1
-            msg += str(self.field[i]["display"])
+            msg += str(i["display"])
             # makes it look better
             msg += " "
             if j >= self.length:

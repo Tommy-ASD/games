@@ -24,9 +24,9 @@ class template:
     def viewField(self):
         currentX = 0
         msg = ""
-        for i in range(self.spaces):
+        for i in self.field:
             currentX += 1
-            msg += self.field[i]["state"]
+            msg += i["state"]
             msg += " "
             # if current x is length, jump to next y
             if currentX % self.length == 0:
@@ -85,6 +85,13 @@ class template:
             rightA,
         )
 
+    def convertToIndex(self, x, y):
+        # input y: 10
+        # output y: 9 * length
+        adjustedY = (y - 1) * self.length
+        adjustedX = x - 1
+        index = adjustedX + adjustedY
+        return index
 
 temp = template()
 temp.createField()
