@@ -1,7 +1,7 @@
 class template:
-    def __init__(self):
+    def __init__(self, size):
         self.player = False
-        self.length = 3
+        self.length = size
         self.spaces = self.length**2
         self.field = []
         self.fieldData = {"state": "▮"}
@@ -25,12 +25,17 @@ class template:
                 currentX = 0
         print(msg)
 
-    def playField(self, index):
+    def playField(self, x, y):
+        adjustedX = x - 1
+        adjustedY = (y - 1) * self.length
+        index = adjustedX + adjustedY
         if self.field[index]["state"] == "▮":
             self.field[index]["state"] = "O" if self.player else "X"
             self.player = not self.player
         else:
             print("That index is already played")
+        temp.viewField()
+        temp.checkWins(adjustedX, adjustedY)
 
     def convertToIndex(self, x, y):
         # input y: 10
@@ -38,6 +43,7 @@ class template:
         adjustedY = (y - 1) * self.length
         adjustedX = x - 1
         index = adjustedX + adjustedY
+        # self.convertToCoors(index)
         return index
 
     def getBelow(self, index):
@@ -100,13 +106,12 @@ class template:
         ):
             return self.getTopRight(topRight)
 
-    def checkWins(self):
+    def checkWins(self, x, y):
         # check all rows/coloums for win
         # can be optimized to only check those that apply to last played index
         boolList = []
-        for i in range(self.length):
-            boolList.append(self.getBelow(i))
-            boolList.append(self.getRight(self.length * i))
+        boolList.append(self.getBelow(x))
+        boolList.append(self.getRight(y))
         # @PARAM (self.length**2 + 1) is the index after the last one
         # - self.length is to get the top-right
         boolList.append(self.getTopRight((self.length**2) - self.length))
@@ -117,14 +122,7 @@ class template:
 
 while True:
     input("Press enter to continue: ")
-    temp = template()
+    temp = template(int(input("How large should the grid be?\n")))
     temp.createField()
     while temp.running:
-        temp.playField(
-            temp.convertToIndex(
-                int(input("Enter X coords: ")), int(input("Enter Y coords: "))
-            )
-        )
-        temp.viewField()
-        # TODO: fix this bug; https://cdn.discordapp.com/attachments/633289066212884490/972024244240269332/unknown.png
-        temp.checkWins()
+        temp.playField(int(input("Enter X coords: ")), int(input("Enter Y coords: ")))
