@@ -55,12 +55,9 @@ class template:
             return self.getBelow(below)
 
     def getRight(self, index):
-        # why broken
-        # what
         right = index + 1
-        # if index is at the very right side of the grid
+        # if index is at the very right side of the screen
         # this function always starts at the very left side
-        # self.length is at the very left side
         if right % self.length == 0:
             print(f"{self.field[index]['state']} won")
             return True
@@ -69,14 +66,13 @@ class template:
             self.field[right]["state"] == self.field[index]["state"]
             and self.field[index]["state"] != "▮"
         ):
-            # repeat function until the very right side of the grid
-            return self.getRight(right)
+            return self.getBelow(right)
 
     def getBottomRight(self, index):
         # if index is bottom-right of grid
         if index == self.length**2 - 1:
             print(f"{self.field[index]['state']} won")
-            # return True
+            return True
         # bottom-right of current index's position
         bottomRight = (index + self.length) + 1
         # only proceed if next index is played by same player
@@ -99,6 +95,8 @@ class template:
             and self.field[index]["state"] != "▮"
         ):
             return self.getTopRight(topRight)
+
+        pass
 
     def checkWins(self):
         # check all rows/coloums for win
@@ -126,5 +124,5 @@ while True:
             )
         )
         temp.viewField()
-        # TODO: fix this bug; https://cdn.discordapp.com/attachments/633289066212884490/972024244240269332/unknown.png
         temp.checkWins()
+    temp.checkWins()
