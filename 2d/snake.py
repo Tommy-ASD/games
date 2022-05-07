@@ -5,7 +5,7 @@ import os
 import keyboard
 
 
-class template:
+class snake:
     def __init__(self):
         self.length = 25
         self.height = 25
@@ -21,6 +21,9 @@ class template:
         self.snakeDisplay = "▮"
         self.emptySpaceDisplay = "."
         self.fieldData = {"state": self.emptySpaceDisplay, "neighbors": 0}
+        self.createField()
+        self.generateObject()
+        self.viewField()
 
     def createField(self):
         for i in range(self.spaces):
@@ -48,6 +51,7 @@ class template:
                 msg += "\n"
                 currentX = 0
         print(msg)
+        return msg
 
     def move(self):
         # just to make stuff look better
@@ -112,24 +116,28 @@ class template:
             # move self
             self.field[self.snake[index]["position"]]["state"] = self.snakeDisplay
 
+    def main(self):
+        return
 
-while True:
-    input()
-    temp = template()
-    temp.createField()
-    temp.generateObject()
-    temp.viewField()
-    while temp.alive:
-        temp.move()
-        temp.viewField()
-        if keyboard.is_pressed("s"):
-            temp.movement = 0
-        if keyboard.is_pressed("d"):
-            temp.movement = 1
-        if keyboard.is_pressed("a"):
-            temp.movement = 2
-        if keyboard.is_pressed("w"):
-            temp.movement = 3
-        if keyboard.is_pressed("q"):
-            temp.snake.append(temp.snakePartData.copy())
-    print("died")
+
+def main():
+    while True:
+        input()
+        temp = snake()
+        while temp.alive:
+            temp.move()
+            temp.viewField()
+            if keyboard.is_pressed("s"):
+                temp.movement = 0
+            if keyboard.is_pressed("d"):
+                temp.movement = 1
+            if keyboard.is_pressed("a"):
+                temp.movement = 2
+            if keyboard.is_pressed("w"):
+                temp.movement = 3
+            if keyboard.is_pressed("q"):
+                temp.snake.append(temp.snakePartData.copy())
+        print("died")
+
+
+main()
