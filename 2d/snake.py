@@ -5,22 +5,22 @@ import os
 import keyboard
 
 
-class snake:
-    def __init__(self):
-        pass
-
-
 class template:
     def __init__(self):
-        self.length = 10
-        self.height = 10
+        self.length = 25
+        self.height = 25
         self.spaces = self.height * self.length
+        # need a default movement (in this case, down)
         self.movement = 0
         self.alive = True
         self.field = []
         self.snakePartData = {"position": 0}
         self.snake = [self.snakePartData.copy()]
-        self.fieldData = {"state": ".", "neighbors": 0}
+
+        self.objectDisplay = "a"
+        self.snakeDisplay = "▮"
+        self.emptySpaceDisplay = "."
+        self.fieldData = {"state": self.emptySpaceDisplay, "neighbors": 0}
 
     def createField(self):
         for i in range(self.spaces):
@@ -30,9 +30,9 @@ class template:
     def generateObject(self):
         index = random.randrange(0, self.spaces)
         # if object position is a part of the snake, choose new position
-        if self.field[index]["state"] == "▮":
+        if self.field[index]["state"] == self.snakeDisplay:
             return self.generateObject()
-        self.field[index]["state"] = "b"
+        self.field[index]["state"] = self.objectDisplay
         self.objectPosition = index
 
     def viewField(self):
@@ -49,33 +49,28 @@ class template:
                 currentX = 0
         print(msg)
 
-    def convertToIndex(self, x, y):
-        # input y: 10
-        # output y: 9 * length
-        adjustedY = (y - 1) * self.length
-        adjustedX = x - 1
-        index = adjustedX + adjustedY
-        return index
-
     def move(self):
+        # just to make stuff look better
         selfPos = self.snake[0]["position"]
         match self.movement:
             # Case 0: down
             case 0:
                 move = self.length
                 nextPosition = selfPos + move
-                # same as previous, except index + length is exactly the one below
+                # if nothing below (if at bottom of screen and going downwards), die
                 if not nextPosition < self.spaces:
                     self.alive = False
             # Case 1: right
             case 1:
                 move = 1
                 nextPosition = selfPos + move
+                # if nothing to the right (if at far right side of screen and going right), die
                 if selfPos % self.length == self.length - 1:
                     self.alive = False
             # Case 2: left
             case 2:
                 move = -1
+                # if nothing to the left (if at far left side of screen and going left), die
                 nextPosition = selfPos + move
                 if selfPos % self.length == 0:
                     self.alive = False
@@ -83,34 +78,39 @@ class template:
             case 3:
                 move = -self.length
                 nextPosition = selfPos + move
-                # index - (-length) is the one exactly below
+                # if nothing above (if at top of screen and going upwards), die
                 if not nextPosition >= 0:
                     self.alive = False
+        # to avoid breaking stuff, add if self.alive
         if self.alive:
-            self.field[selfPos]["state"] = "."
+            self.field[selfPos]["state"] = self.emptySpaceDisplay
             self.moveChildren(1)
             self.snake[0]["position"] += move
             selfPos = self.snake[0]["position"]
-            if self.field[selfPos]["state"] == "▮":
+            # need to check if next position is part of snake before making it part of snake
+            # if it is, die
+            if self.field[selfPos]["state"] == self.snakeDisplay:
                 self.alive = False
-            self.field[selfPos]["state"] = "▮"
+            # if not, make next position part of snake
+            self.field[selfPos]["state"] = self.snakeDisplay
+            # if current position is object
             if selfPos == self.objectPosition:
                 self.snake.append(self.snakePartData.copy())
-                self.snake[-1]["position"] = self.snake[-2]["position"] - 1
                 self.generateObject()
 
             time.sleep(0.1)
 
     def moveChildren(self, index):
+        # if snake is this long
         if index < len(self.snake):
-            self.field[self.snake[index]["position"]]["state"] = "."
+            self.field[self.snake[index]["position"]]["state"] = self.emptySpaceDisplay
+            # move children to own position before moving to next position
             self.moveChildren(index + 1)
+            # self.snake[1] takes the old position of self.snake[0]
+            # all after that take the old position of the one before
             self.snake[index]["position"] = self.snake[index - 1]["position"]
-            self.field[self.snake[index]["position"]]["state"] = "▮"
-
-
-def index_in_list(a_list, index):
-    return index < len(a_list)
+            # move self
+            self.field[self.snake[index]["position"]]["state"] = self.snakeDisplay
 
 
 while True:
@@ -132,5 +132,4 @@ while True:
             temp.movement = 3
         if keyboard.is_pressed("q"):
             temp.snake.append(temp.snakePartData.copy())
-
     print("died")
