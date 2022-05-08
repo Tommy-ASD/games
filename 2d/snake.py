@@ -125,8 +125,6 @@ def main():
         input()
         temp = snake()
         while temp.alive:
-            temp.move()
-            temp.viewField()
             if keyboard.is_pressed("s"):
                 temp.movement = 0
             if keyboard.is_pressed("d"):
@@ -137,6 +135,8 @@ def main():
                 temp.movement = 3
             if keyboard.is_pressed("q"):
                 temp.snake.append(temp.snakePartData.copy())
+            temp.move()
+            temp.viewField()
         print("died")
 
 
