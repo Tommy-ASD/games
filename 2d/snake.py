@@ -1,4 +1,3 @@
-from pickle import FALSE
 import random
 import time
 import os
@@ -7,8 +6,8 @@ import keyboard
 
 class snake:
     def __init__(self):
-        self.length = 25
-        self.height = 25
+        self.length = 10
+        self.height = 10
         self.spaces = self.height * self.length
         # need a default movement (in this case, down)
         self.movement = 0
