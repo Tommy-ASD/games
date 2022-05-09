@@ -8,7 +8,7 @@ class template:
         self.spaces = self.height * self.length
         self.objectAmount = self.spaces / 3
         self.field = []
-        self.fieldData = {"state": ".", "neighbors": 0}
+        self.fieldData = {"state": ".", "piece": None}
         # piece types:
         # p: Pawn
         # b: Bishop
@@ -16,9 +16,8 @@ class template:
         # r: Rook
         # q: Queen
         # c: King
-        self.piece = {"positon": 0, "color": False, "moved": False, "type": "p"}
-        self.blackPieces = []
-        self.whitePieces = []
+        self.piece = {"position": 0, "color": False, "moved": False, "type": "p"}
+        self.pieces = []
 
     def createField(self):
         for i in range(self.spaces):
@@ -27,40 +26,42 @@ class template:
 
     def generateWhite(self):
         for i in range(16):
-            self.whitePieces.append(self.piece)
-        self.field[0]["state"] = "t"
-        self.field[1]["state"] = "h"
-        self.field[2]["state"] = "b"
-        self.field[3]["state"] = "k"
-        self.field[4]["state"] = "q"
-        self.field[5]["state"] = "b"
-        self.field[6]["state"] = "h"
-        self.field[7]["state"] = "t"
-        # generate pawns
-        for i in range(self.length):
-            index = self.length + i
-            self.field[index]["state"] = "p"
-            pass
+            self.pieces.append(self.piece.copy())
+            self.pieces[i]["color"] = True
+            self.pieces[i]["position"] = i
+            self.field[self.pieces[i]["position"]]["piece"] = i
+
+        self.pieces[0]["type"] = "t"
+        self.pieces[1]["type"] = "k"
+        self.pieces[2]["type"] = "b"
+        self.pieces[3]["type"] = "c"
+        self.pieces[4]["type"] = "q"
+        self.pieces[5]["type"] = "b"
+        self.pieces[6]["type"] = "k"
+        self.pieces[7]["type"] = "t"
 
     def generateBlack(self):
-        self.field[56]["state"] = "t"
-        self.field[57]["state"] = "h"
-        self.field[58]["state"] = "b"
-        self.field[59]["state"] = "k"
-        self.field[60]["state"] = "q"
-        self.field[61]["state"] = "b"
-        self.field[62]["state"] = "h"
-        self.field[63]["state"] = "t"
-        # generate pawns
-        for i in range(self.length):
-            # it just works
-            index = self.length * self.length - self.length - i - 1
-            self.field[index]["state"] = "p"
-            pass
+        pass
+        for i in range(16):
+            self.pieces.append(self.piece.copy())
+            self.pieces[i + 16]["color"] = True
+            self.pieces[i + 16]["position"] = self.spaces - i - 1
+            self.field[self.pieces[i + 16]["position"]]["piece"] = i + 16
+
+        self.pieces[0 + 16]["type"] = "t"
+        self.pieces[1 + 16]["type"] = "k"
+        self.pieces[2 + 16]["type"] = "b"
+        self.pieces[3 + 16]["type"] = "q"
+        self.pieces[4 + 16]["type"] = "c"
+        self.pieces[5 + 16]["type"] = "b"
+        self.pieces[6 + 16]["type"] = "k"
+        self.pieces[7 + 16]["type"] = "t"
 
     def viewField(self):
         currentX = 0
         msg = ""
+        for i in self.pieces:
+            self.field[i["position"]]["state"] = i["type"]
         for i in self.field:
             currentX += 1
             msg += i["state"]
@@ -130,10 +131,30 @@ class template:
         index = adjustedX + adjustedY
         return index
 
+    def play(self, positionFrom, positionTo):
+        self.pieces[self.field[positionFrom]["piece"]]["position"] = positionTo
+        self.field[positionFrom]["piece"] = None
+        pass
+
+    def checkAllowedMovement(piece):
+        match piece["type"]:
+            case "p":
+                pass
+            case "t":
+                pass
+            case "k":
+                pass
+            case "b":
+                pass
+            case "q":
+                pass
+            case "c":
+                pass
+
 
 temp = template()
 temp.createField()
-temp.generateObjects()
 temp.generateWhite()
 temp.generateBlack()
+temp.play(temp.convertToIndex(1, 1), temp.convertToIndex(5, 5))
 temp.viewField()

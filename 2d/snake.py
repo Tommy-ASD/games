@@ -6,8 +6,8 @@ import keyboard
 
 class snake:
     def __init__(self):
-        self.length = 10
-        self.height = 10
+        self.length = 25
+        self.height = 25
         self.spaces = self.height * self.length
         # need a default movement (in this case, down)
         self.movement = 0
@@ -32,7 +32,7 @@ class snake:
     def generateObject(self):
         index = random.randrange(0, self.spaces)
         # if object position is a part of the snake, choose new position
-        if self.field[index]["state"] == self.snakeDisplay:
+        if self.field[index]["state"] == self.snakeDisplay or index == 0:
             return self.generateObject()
         self.field[index]["state"] = self.objectDisplay
         self.objectPosition = index
