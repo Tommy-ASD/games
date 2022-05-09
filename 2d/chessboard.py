@@ -132,13 +132,38 @@ class template:
         return index
 
     def play(self, positionFrom, positionTo):
+        if self.field[positionFrom]["piece"] is None:
+            print("that isn't a piece")
+            return
+        allowedMovement = self.checkAllowedMovement(
+            self.pieces[self.field[positionFrom]["piece"]]
+        )
+        if positionTo not in allowedMovement:
+            print("not allowed")
+            return
         self.pieces[self.field[positionFrom]["piece"]]["position"] = positionTo
+        self.pieces[self.field[positionFrom]["piece"]]["moved"] = True
+        self.field[positionTo]["piece"] = self.field[positionFrom]["piece"]
         self.field[positionFrom]["piece"] = None
-        pass
 
-    def checkAllowedMovement(piece):
+    def checkAllowedMovement(self, piece):
+        movement = []
+        allowedMovement = []
         match piece["type"]:
             case "p":
+                if piece["color"]:
+                    movement.append(self.length)
+                else:
+                    movement.append(-self.length)
+                if not piece["moved"]:
+                    movement.append(movement[0] * 2)
+                for i in movement:
+                    if self.field[piece["position"] + i]["piece"] == None:
+                        allowedMovement.append(piece["position"] + i)
+                    if self.field[piece["position"] + i + 1]["piece"] != None:
+                        allowedMovement.append(piece["position"] + i + 1)
+                    if self.field[piece["position"] + i - 1]["piece"] != None:
+                        allowedMovement.append(piece["position"] + i - 1)
                 pass
             case "t":
                 pass
@@ -150,11 +175,19 @@ class template:
                 pass
             case "c":
                 pass
+        return allowedMovement
 
 
 temp = template()
 temp.createField()
 temp.generateWhite()
 temp.generateBlack()
-temp.play(temp.convertToIndex(1, 1), temp.convertToIndex(5, 5))
+temp.play(temp.convertToIndex(1, 2), temp.convertToIndex(1, 4))
+temp.play(temp.convertToIndex(1, 4), temp.convertToIndex(1, 7))
+temp.play(temp.convertToIndex(1, 4), temp.convertToIndex(1, 6))
+temp.play(temp.convertToIndex(1, 4), temp.convertToIndex(1, 5))
+# temp.play(temp.convertToIndex(1, 3), temp.convertToIndex(1, 2))
+# temp.play(temp.convertToIndex(1, 3), temp.convertToIndex(2, 3))
+# temp.play(temp.convertToIndex(1, 3), temp.convertToIndex(2, 4))
+# temp.play(temp.convertToIndex(1, 3), temp.convertToIndex(1, 4))
 temp.viewField()
