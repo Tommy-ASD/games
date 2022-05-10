@@ -1,0 +1,15 @@
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\bin\Debug\net6.0\wordleCS.exe
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\bin\Debug\net6.0\wordleCS.deps.json
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\bin\Debug\net6.0\wordleCS.runtimeconfig.json
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\bin\Debug\net6.0\wordleCS.dll
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\bin\Debug\net6.0\wordleCS.pdb
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\obj\Debug\net6.0\wordleCS.csproj.AssemblyReference.cache
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\obj\Debug\net6.0\wordleCS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\obj\Debug\net6.0\wordleCS.AssemblyInfoInputs.cache
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\obj\Debug\net6.0\wordleCS.AssemblyInfo.cs
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\obj\Debug\net6.0\wordleCS.csproj.CoreCompileInputs.cache
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\obj\Debug\net6.0\wordleCS.dll
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\obj\Debug\net6.0\refint\wordleCS.dll
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\obj\Debug\net6.0\wordleCS.pdb
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\obj\Debug\net6.0\wordleCS.genruntimeconfig.cache
+C:\Users\Tommy\Documents\programming\randomStuff\wordleCS\obj\Debug\net6.0\ref\wordleCS.dll
