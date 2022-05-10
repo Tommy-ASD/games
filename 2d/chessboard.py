@@ -164,8 +164,8 @@ class template:
                         allowedMovement.append(piece["position"] + i + 1)
                     if self.field[piece["position"] + i - 1]["piece"] != None:
                         allowedMovement.append(piece["position"] + i - 1)
-                pass
             case "t":
+
                 pass
             case "k":
                 pass
@@ -183,11 +183,4 @@ temp.createField()
 temp.generateWhite()
 temp.generateBlack()
 temp.play(temp.convertToIndex(1, 2), temp.convertToIndex(1, 4))
-temp.play(temp.convertToIndex(1, 4), temp.convertToIndex(1, 7))
-temp.play(temp.convertToIndex(1, 4), temp.convertToIndex(1, 6))
-temp.play(temp.convertToIndex(1, 4), temp.convertToIndex(1, 5))
-# temp.play(temp.convertToIndex(1, 3), temp.convertToIndex(1, 2))
-# temp.play(temp.convertToIndex(1, 3), temp.convertToIndex(2, 3))
-# temp.play(temp.convertToIndex(1, 3), temp.convertToIndex(2, 4))
-# temp.play(temp.convertToIndex(1, 3), temp.convertToIndex(1, 4))
 temp.viewField()
