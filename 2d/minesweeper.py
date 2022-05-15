@@ -276,4 +276,7 @@ while True:
                 )
             ),
         )
-    MS.main()
+    try:
+        MS.main()
+    except ValueError:
+        print("Please input a number")
