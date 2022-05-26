@@ -1,0 +1,15 @@
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\bin\Debug\net6.0\learningCS.exe
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\bin\Debug\net6.0\learningCS.deps.json
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\bin\Debug\net6.0\learningCS.runtimeconfig.json
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\bin\Debug\net6.0\learningCS.dll
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\bin\Debug\net6.0\learningCS.pdb
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\obj\Debug\net6.0\learningCS.csproj.AssemblyReference.cache
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\obj\Debug\net6.0\learningCS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\obj\Debug\net6.0\learningCS.AssemblyInfoInputs.cache
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\obj\Debug\net6.0\learningCS.AssemblyInfo.cs
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\obj\Debug\net6.0\learningCS.csproj.CoreCompileInputs.cache
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\obj\Debug\net6.0\learningCS.dll
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\obj\Debug\net6.0\refint\learningCS.dll
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\obj\Debug\net6.0\learningCS.pdb
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\obj\Debug\net6.0\learningCS.genruntimeconfig.cache
+C:\Users\Tommy\Documents\programming\randomStuff\learningCS\obj\Debug\net6.0\ref\learningCS.dll
