@@ -163,6 +163,20 @@ class template:
         if any(boolList):
             self.running = False
 
+    # check top-left bottom-right
+    def checkTRBL(self, index):
+        # check all directions for win
+        # can be optimized to only check those that apply to last played index
+        topLeft = index - (self.length - 1)
+        bottomRight = index + (self.length + 1)
+        boolList = []
+        boolList.append(self.getBelow(index))
+        boolList.append(self.getRight(index))
+        boolList.append(self.getBottomRight(index))
+        boolList.append(self.getTopRight(index))
+        if any(boolList):
+            self.running = False
+
 
 while True:
     input("Press enter to continue: ")
